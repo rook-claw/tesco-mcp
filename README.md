@@ -106,6 +106,10 @@ python -m tesco_mcp.server
 | `get_nutrition` | Get per-100g nutrition for one product | `tpnb`, `country` |
 | `compare_products` | Compare multiple products side-by-side by price and nutrition | `query`, `count`, `sort_by`, `country` |
 | `find_best_value_protein` | Sort products by protein grams per unit of currency | `query`, `count`, `country` |
+| `get_promotions` | Find products with active promotions/deals | `query`, `count`, `country` |
+| `find_alternatives` | Find cheaper alternatives with savings breakdown | `product_name`, `count`, `country` |
+| `meal_cost_calculator` | Estimate meal cost from a list of ingredients | `ingredients` (comma-separated), `country` |
+| `weekly_shop_estimator` | Estimate weekly shop cost with quantities | `items` (e.g. "chicken x2, rice x1"), `country` |
 
 `compare_products.sort_by` supports:
 
@@ -167,6 +171,12 @@ python -m tesco_mcp.server
 ```
 
 The test suite is unit-only by default and uses mocked HTTP responses. It does not hit Tesco live APIs.
+
+## Security: Agent Vault integration
+
+All current tools use **public endpoints** — no authentication required. For future authenticated features (cart, orders, delivery slots), we recommend [Agent Vault](https://github.com/Infisical/agent-vault) by Infisical to broker credentials securely. Your AI agent never sees real session cookies.
+
+See [docs/agent-vault.md](docs/agent-vault.md) for setup instructions.
 
 ## Project status
 
