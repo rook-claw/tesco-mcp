@@ -1,0 +1,16 @@
+<svg width="920" height="420" viewBox="0 0 920 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Tesco MCP demo screenshot</title>
+  <desc id="desc">Terminal-style screenshot showing an AI assistant comparing Tesco chicken products by protein per euro.</desc>
+  <rect width="920" height="420" rx="18" fill="#0f172a"/>
+  <rect x="24" y="24" width="872" height="372" rx="14" fill="#111827" stroke="#334155"/>
+  <circle cx="52" cy="52" r="7" fill="#ef4444"/>
+  <circle cx="76" cy="52" r="7" fill="#f59e0b"/>
+  <circle cx="100" cy="52" r="7" fill="#22c55e"/>
+  <text x="40" y="95" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="18">Claude + tesco-mcp</text>
+  <text x="40" y="138" fill="#e2e8f0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="19">› Find the best value high-protein chicken at Tesco Ireland</text>
+  <text x="40" y="185" fill="#38bdf8" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="17">Tool: find_best_value_protein(query="chicken", count=3, country="ie")</text>
+  <text x="40" y="236" fill="#f8fafc" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="17">1. Tesco Irish Chicken Breast Fillets 500G</text>
+  <text x="64" y="267" fill="#a7f3d0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="16">€6.15 · 24.0g protein/100g · 3.90g protein/€</text>
+  <text x="40" y="312" fill="#f8fafc" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="17">2. Tesco Chicken Mini Fillets 400G</text>
+  <text x="64" y="343" fill="#a7f3d0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="16">€5.00 · 23.0g protein/100g · 4.60g protein/€</text>
+</svg>
