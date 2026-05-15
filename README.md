@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![MCP](https://img.shields.io/badge/MCP-compatible-6f42c1.svg)](https://modelcontextprotocol.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![CI](https://github.com/conormongan/tesco-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/conormongan/tesco-mcp/actions/workflows/ci.yml)
+[![CI](https://github.com/rook-claw/tesco-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/rook-claw/tesco-mcp/actions/workflows/ci.yml)
 
 Search Tesco products, compare prices, check promotions, and inspect per-100g nutrition — directly from Claude, OpenClaw, or any MCP client.
 
@@ -46,7 +46,7 @@ uvx tesco-mcp
 For local development from a clone:
 
 ```bash
-git clone https://github.com/conormongan/tesco-mcp.git
+git clone https://github.com/rook-claw/tesco-mcp.git
 cd tesco-mcp
 python -m venv .venv
 source .venv/bin/activate
