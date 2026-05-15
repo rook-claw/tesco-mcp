@@ -4,9 +4,9 @@
 
 ## Why use Agent Vault with Tesco MCP?
 
-Tesco MCP v1 uses **public endpoints only** — no authentication required for product search, nutrition data, and price comparison. Agent Vault is not needed for these features.
+Tesco MCP currently uses **public endpoints only** — no authentication required for product search, nutrition data, and price comparison. Agent Vault is not needed for these features.
 
-However, future versions (v2+) will add **authenticated features** that require a Tesco account:
+However, future versions will add **authenticated features** that require a Tesco account:
 
 - 🛒 Cart management (add, view, remove items)
 - 📦 Order history
@@ -42,46 +42,48 @@ AI Agent (Claude, OpenClaw, etc.)
 
 ### 1. Install Agent Vault
 
-```bash
-# Docker
-docker run -d --name agent-vault \
-  -p 14321:14321 -p 14322:14322 \
-  infisical/agent-vault:latest
-
-# Or binary
-curl -fsSL https://raw.githubusercontent.com/Infisical/agent-vault/main/install.sh | bash
-```
-
-### 2. Configure credential substitution
-
-Add a service rule for Tesco's API endpoints:
-
-```yaml
-# agent-vault.yaml
-services:
-  - name: tesco-api
-    hosts:
-      - "xapi.tesco.com"
-      - "search.api.tesco.com"
-    credentials:
-      - type: header
-        header_name: Cookie
-        dummy_value: "__tesco_session__"
-        real_value_env: "TESCO_SESSION_COOKIE"
-```
-
-### 3. Configure your agent
-
-Set the `HTTPS_PROXY` environment variable so your agent routes traffic through Agent Vault:
+Agent Vault runs on a **separate host** from your agent. See the [installation guide](https://docs.agent-vault.dev/installation) for full options.
 
 ```bash
-export HTTPS_PROXY=http://localhost:14322
-export TESCO_SESSION_COOKIE="your-real-tesco-session-cookie"
+# Install the CLI on your agent's machine
+curl --proto '=https' --proto-redir '=https' --tlsv1.2 -fsSL https://get.agent-vault.dev | sh
 ```
 
-### 4. Use dummy credentials in Tesco MCP
+### 2. Configure a vault with Tesco credentials
 
-When authenticated features are available, the MCP server will use `__tesco_session__` as the cookie value. Agent Vault transparently swaps it before the request reaches Tesco.
+In the Agent Vault management UI (port 14321), create a vault with service rules for Tesco's API endpoints. Configure credential substitution so that requests to `xapi.tesco.com` and `search.api.tesco.com` have the dummy cookie replaced with a real Tesco session cookie.
+
+### 3. Create an agent token
+
+In Agent Vault, create an agent and obtain a token (`av_agt_xxx`). This token authenticates your agent to the vault without exposing any upstream credentials.
+
+### 4. Run your agent through Agent Vault
+
+```bash
+export AGENT_VAULT_ADDR="http://<vault-host>:14321"
+export AGENT_VAULT_TOKEN="av_agt_xxx"
+export AGENT_VAULT_VAULT="<VAULT_NAME>"
+
+# agent-vault run wraps your process with HTTPS_PROXY set automatically
+agent-vault run -- python -m tesco_mcp.server
+```
+
+Or in Docker:
+
+```dockerfile
+COPY --from=infisical/agent-vault:latest /usr/local/bin/agent-vault /usr/local/bin/agent-vault
+ENTRYPOINT ["agent-vault", "run", "--", "python", "-m", "tesco_mcp.server"]
+```
+
+```bash
+docker run --rm \
+  -e AGENT_VAULT_ADDR="http://<vault-host>:14321" \
+  -e AGENT_VAULT_TOKEN="av_agt_xxx" \
+  -e AGENT_VAULT_VAULT="<VAULT_NAME>" \
+  your-tesco-mcp-image
+```
+
+The `agent-vault run` command sets `HTTPS_PROXY` and `HTTP_PROXY` automatically so all outbound HTTP calls route through Agent Vault for credential injection.
 
 ## Current status
 
@@ -91,7 +93,9 @@ When authenticated features are available, the MCP server will use `__tesco_sess
 | Get nutrition | ❌ | ❌ |
 | Compare products | ❌ | ❌ |
 | Find promotions | ❌ | ❌ |
+| Find alternatives | ❌ | ❌ |
 | Meal cost calculator | ❌ | ❌ |
+| Weekly shop estimator | ❌ | ❌ |
 | Cart management | ✅ | ✅ Recommended |
 | Order history | ✅ | ✅ Recommended |
 | Delivery slots | ✅ | ✅ Recommended |
@@ -100,4 +104,5 @@ When authenticated features are available, the MCP server will use `__tesco_sess
 
 - [Agent Vault documentation](https://docs.agent-vault.dev/)
 - [Agent Vault GitHub](https://github.com/Infisical/agent-vault)
+- [Custom agent quickstart](https://docs.agent-vault.dev/quickstart/custom-agent)
 - [Infisical](https://infisical.com)
