@@ -11,6 +11,9 @@ Search Tesco products, compare prices, check promotions, and inspect per-100g nu
 
 ![Tesco MCP demo](docs/tesco-mcp-demo.svg)
 
+> [!IMPORTANT]
+> **Unofficial project.** Tesco MCP is not affiliated with, endorsed by, or supported by Tesco. It calls undocumented web endpoints that can change or stop working without notice. Check Tesco's website terms before use, keep request volumes low, and do not use it for scraping or commercial resale of data.
+
 ## What it can do
 
 Ask your AI assistant things like:
